@@ -1,0 +1,43 @@
+<p>HEllo</p>
+
+<a href="javascript:(a%20=%20(b%20=%20document).createElement('script')).src%20=%20'http://localhost:4567/js/bm.js',%20b.body.appendChild(a);void(0);" title="AirPlay" class="bm">
+  AirPlay
+</a>
+
+<form action="/play" method="post">
+
+  <input name="url">
+
+  <select name="device_index">
+    <% device_names.each_with_index do |name, index| %>
+       <option value="<%= index %>">
+         <%= name %>
+       </option>
+    <% end %>
+  </select>
+
+  <input type="submit" value="Submit" />
+</form>
+
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="">
+  </div>
+</div>
+
+
+<script type="text/javascript">
+    $(function() {
+
+        var updatePosition = function(position, duration) {
+            $('.progress-bar').css('width', position / duration * 100 + '%');
+        }
+
+        var pool = function() {
+            $.getJSON('/info').success(function(data, textStatus, jqXHR) {
+                updatePosition(data.position, data.duration);
+            })
+        }
+
+        setInterval(pool, 1000);
+    });
+</script>

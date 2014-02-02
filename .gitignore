@@ -1,0 +1,5 @@
+
+.idea
+*.app
+/vendor/bundle/*
+/tmp

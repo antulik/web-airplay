@@ -1,0 +1,24 @@
+
+
+function <%= params[:callback] %>() {
+    console.log('asd');
+
+}
+
+//  <%= request.inspect %>
+
+console.log('qqqq');
+
+
+
+Messenger.options = {
+    extraClasses: 'messenger-fixed messenger-on-top',
+    theme: 'future'
+}
+
+Messenger().post({
+    message: "Your request has succeded!",
+    showCloseButton: true,
+    hideAfter: 10
+
+});
