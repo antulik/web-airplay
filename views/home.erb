@@ -1,39 +1,74 @@
-<p>HEllo</p>
+<style type="text/css">
+    body {
+        margin: 10px;
+    }
+</style>
 
-<a href="javascript:(a%20=%20(b%20=%20document).createElement('script')).src%20=%20'http://localhost:4567/js/bm.js',%20b.body.appendChild(a);void(0);" title="AirPlay" class="bm">
-  AirPlay
-</a>
+<div class="container-fluid">
 
-<form action="/play" method="post">
+  <div class="row">
+    <div class="col-xs-4">
+      <span class="navbar-brand" href="#">WebAirplay</span>
+    </div>
 
-  <input name="url">
+    <div class="col-xs-8">
+      <div class="pull-right">
+        <span>Bookmark this link >>></span>
+        <a href="javascript:(a%20=%20(b%20=%20document).createElement('script')).src%20=%20'http://localhost:4567/js/bm.js',%20b.body.appendChild(a);void(0);" title="AirPlay" class="btn btn-warning navbar-btn" id="bookmark-link">
+          WebAirplay
+        </a>
+      </div>
+    </div>
+  </div>
 
-  <select name="device_index">
-    <% device_names.each_with_index do |name, index| %>
-       <option value="<%= index %>">
-         <%= name %>
-       </option>
-    <% end %>
-  </select>
+</div>
+<form role="form" action="/play" method="post">
+  <div class="form-group">
+    <label for="play-url">Youtube URL</label>
+    <input type="text" class="form-control" id="play-url" placeholder="http://www.youtube.com/watch?v=Jg_IORfUXMs">
 
-  <input type="submit" value="Submit" />
+  </div>
+
+  <div class="form-group">
+    <select name="device_index" class="form-control">
+      <% device_names.each_with_index do |name, index| %>
+          <option value="<%= index %>">
+            <%= name %>
+          </option>
+      <% end %>
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-success btn-block">Play</button>
 </form>
 
-<div class="progress">
-  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="">
+<br>
+<br>
+
+<div class="row">
+  <div class="col-xs-12">
+    Progress
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="">
+      </div>
+    </div>
   </div>
 </div>
 
 
 <script type="text/javascript">
-    $(function() {
+    $(function () {
 
-        var updatePosition = function(position, duration) {
+        var updatePosition = function (position, duration) {
             $('.progress-bar').css('width', position / duration * 100 + '%');
         }
 
-        var pool = function() {
-            $.getJSON('/info').success(function(data, textStatus, jqXHR) {
+        var pool = function () {
+            $.getJSON('/info').success(function (data, textStatus, jqXHR) {
                 updatePosition(data.position, data.duration);
             })
         }
