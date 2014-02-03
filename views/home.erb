@@ -76,3 +76,23 @@
         setInterval(pool, 1000);
     });
 </script>
+
+<script type="text/javascript">
+    githubReleaseReminder({
+        url: 'https://api.github.com/repos/antulik/web-airplay/releases',
+        current_release_id: 170772,
+        on_new_release: function(current_release, new_release) {
+            console.log(current_release);
+            console.log(new_release);
+
+            var url = new_release.html_url;
+            url = url.substr(0, url.length - new_release.tag_name.length);
+
+            var html = '<div class="alert alert-warning">New version is available. Please download new version at:';
+            html += '<pre>' + url + '</pre>';
+            html += '</div> ';
+
+            $('body').prepend(html);
+        }
+    });
+</script>

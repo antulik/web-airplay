@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 STDOUT.write "Location: http://localhost:4567\n"
-STDOUT.flush
 
 require_relative './vendor/bundle/bundler/setup'
 #require 'rubygems'
