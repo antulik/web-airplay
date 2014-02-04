@@ -9,7 +9,7 @@ If you would like to watch video from your desktop you can use builtin Airplay f
 and mirror or extend your desktop. Problems with such solution is lower quality and audio delays.
 In addition you can't use your desktop for other tasks while you are doing that.
 
-For watching movies you can buy and use something like [Beamer](http://beamer-app.com/) app.
+For watching movies you can use something like [Beamer](http://beamer-app.com/) app.
 
 WebAirplay is alternative to Beamer for streaming online videos like Youtube, Vimeo and others from your desktop to Apple TV.
 
