@@ -15,9 +15,9 @@ WebAirplay is alternative to Beamer for streaming online videos like Youtube, Vi
 
 ## Download
 
-You can download on [release page](http://google.com)
+You can download WebAirplay on [release page](https://github.com/antulik/web-airplay/releases)
 
-or build application from source with Platypus.
+or build application from source with Platypus and command:
 
     rake release
 
