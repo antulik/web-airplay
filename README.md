@@ -26,6 +26,7 @@ or build application from source with Platypus and command:
 ## todo
 
 - New Icon
+- Fix bookmark on https pages
 - Refresh airplay devices list
 - Add vimeo support
 - Add any html5 video playback support
@@ -36,7 +37,8 @@ or build application from source with Platypus and command:
 
 ## Changelog
 
-### coming up
+### v0.2 - 2013/02/09
+- Application is more stable
 - New version reminder
 
 ### v0.1 - 2013/02/03
