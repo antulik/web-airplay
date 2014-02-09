@@ -58,6 +58,6 @@ loadStyle('http://localhost:4567/css/messenger.css');
 loadStyle('http://localhost:4567/css/messenger-spinner.css');
 loadStyle('http://localhost:4567/css/messenger-theme-future.css');
 
-loadScript('http://localhost:4567/jsonp?callback=foo');
+loadScript('http://localhost:4567/jsonp?url=' + encodeURIComponent(window.location));
 
 

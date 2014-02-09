@@ -89,9 +89,9 @@ end
 get '/jsonp' do
   content_type "text/javascript"
 
-  referer = request.referrer
-  if referer
-    $media_box.play referer, 0
+  url = params[:url] || request.referrer
+  if url
+    $media_box.play url, 0
   end
   erb :jsonp, :layout => false
 end
