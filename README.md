@@ -31,6 +31,8 @@ or build application from source with Platypus and command:
 - Add any html5 video playback support
 - Simultaneous multiple device playback
 - Local video files support
+- Sign app so MacOS doesn't complaing
+- Put on Appstore
 
 ## Changelog
 
