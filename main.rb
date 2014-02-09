@@ -13,63 +13,41 @@ require 'sinatra'
 require 'celluloid/autostart'
 
 require 'youtuber'
+require 'mediabox'
 
 set :environment, :development
 set :logging, Logger::DEBUG
 
-$pl = nil
-
-class Player
-	include Celluloid
-
-	attr_accessor :player
-
-	def play url, device
-    @player = device.play url
-  end
-
-  def stop
-    player.stop
+module Airplay
+  class << self
+    def clear_browser
+      @_browser = nil
+    end
   end
 end
 
+module Airplay
+  module Playable
+    def player
+      @supervisor ||= Airplay::Player.supervise self
+      @_player ||= @supervisor.actors.first
+    end
+
+    def supervisor
+      @supervisor
+    end
+  end
+end
+
+$media_box = Mediabox.new
 
 helpers do
-  def parse_url url
-    if url.match /youtube\.com/
-      Youtuber.new(url).airplay_link
-    else
-      url
-    end
-  end
+end
 
-  def play url
-    if $pl
-      begin
-        player = $pl
-        player.stop
-      rescue
-
-      end
-
-      player.terminate
-    end
-
-    url = parse_url url
-
-    if url
-      if params[:device_index]
-        device_index = params[:device_index].to_i
-        device = Airplay.devices.to_a[device_index]
-      else
-        device = Airplay.devices.to_a.last
-      end
-
-      $pl = Player.new
-      #raise url.inspect
-      $pl.play url, device
-    end
-  end
+error do
+  puts request.env['sinatra.error'].message
+  Airplay.clear_browser
+  'An error occured: ' + request.env['sinatra.error'].message
 end
 
 get '/' do
@@ -83,13 +61,18 @@ post '/action' do
 end
 
 get '/info' do
-  info = if $pl
-    $pl.player.info.info
+  content_type :json
+
+  if $media_box.player && (!$media_box.player.alive? || $media_box.player.stopped?)
+    $media_box.player = nil
+    Airplay.clear_browser
+  end
+
+  info = if $media_box.player
+    $media_box.player.info.info
   else
     {}
   end
-
-  content_type :json
 
   info.to_json
 end
@@ -99,7 +82,7 @@ post '/test' do
 end
 
 post '/play' do
-  play params[:url]
+  $media_box.play params[:url], params[:device_index]
   redirect to('/')
 end
 
@@ -108,7 +91,7 @@ get '/jsonp' do
 
   referer = request.referrer
   if referer
-    play referer
+    $media_box.play referer, 0
   end
   erb :jsonp, :layout => false
 end
