@@ -37,6 +37,9 @@ or build application from source with Platypus and command:
 
 ## Changelog
 
+### v0.3 - 2013/03/18
+- Fixed bookmark on https pages. (new bookmark link required)
+
 ### v0.2 - 2013/02/09
 - Application is more stable
 - New version reminder
