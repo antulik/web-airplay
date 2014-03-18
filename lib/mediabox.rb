@@ -6,6 +6,7 @@ class Mediabox
   end
 
   def play url, device_index
+    puts 7.chr
     url = parse_url url
 
     if device_index
