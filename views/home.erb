@@ -14,7 +14,12 @@
     <div class="col-xs-8">
       <div class="pull-right">
         <span>Bookmark this link >>></span>
-        <a href="javascript:(a%20=%20(b%20=%20document).createElement('script')).src%20=%20'http://localhost:4567/js/bm.js',%20b.body.appendChild(a);void(0);" title="AirPlay" class="btn btn-warning navbar-btn" id="bookmark-link">
+        <!--
+        javascript:(a = (b = document).createElement('script')).src = 'http://localhost:4567/js/bm.js', b.body.appendChild(a);void(0);
+
+        javascript:(a = (b = document).createElement('img')).src = 'http://localhost:4567/img_play/' + encodeURIComponent(document.location), b.body.appendChild(a);void(0);
+-->
+        <a href="javascript:(a%20=%20(b%20=%20document).createElement('img')).src%20=%20'http://localhost:4567/img_play/'%20+%20encodeURIComponent(document.location),%20b.body.appendChild(a);void(0);" title="AirPlay" class="btn btn-warning navbar-btn" id="bookmark-link">
           WebAirplay
         </a>
       </div>

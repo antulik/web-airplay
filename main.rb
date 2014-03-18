@@ -95,3 +95,14 @@ get '/jsonp' do
   end
   erb :jsonp, :layout => false
 end
+
+get %r{/img_play/(.+)} do
+  content_type "image/gif"
+  url = params[:captures].first
+
+  if !url.empty?
+    $media_box.play url, 0
+  end
+
+  Base64.decode64("R0lGODlhAQABAPAAAAAAAAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==")
+end
