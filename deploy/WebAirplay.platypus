@@ -12,14 +12,14 @@
 	<string>Anton Katunin</string>
 	<key>BundledFiles</key>
 	<array>
-		<string>/Users/anton/Dropbox/projects/simple_sinatra/Gemfile</string>
-		<string>/Users/anton/Dropbox/projects/simple_sinatra/Gemfile.lock</string>
-		<string>/Users/anton/Dropbox/projects/simple_sinatra/lib</string>
-		<string>/Users/anton/Dropbox/projects/simple_sinatra/main.rb</string>
-		<string>/Users/anton/Dropbox/projects/simple_sinatra/public</string>
-		<string>/Users/anton/Dropbox/projects/simple_sinatra/Rakefile</string>
-		<string>/Users/anton/Dropbox/projects/simple_sinatra/vendor</string>
-		<string>/Users/anton/Dropbox/projects/simple_sinatra/views</string>
+		<string>/Users/anton/Dropbox/projects/webairplay/Gemfile</string>
+		<string>/Users/anton/Dropbox/projects/webairplay/Gemfile.lock</string>
+		<string>/Users/anton/Dropbox/projects/webairplay/lib</string>
+		<string>/Users/anton/Dropbox/projects/webairplay/main.rb</string>
+		<string>/Users/anton/Dropbox/projects/webairplay/public</string>
+		<string>/Users/anton/Dropbox/projects/webairplay/Rakefile</string>
+		<string>/Users/anton/Dropbox/projects/webairplay/vendor</string>
+		<string>/Users/anton/Dropbox/projects/webairplay/views</string>
 	</array>
 	<key>Creator</key>
 	<string>Platypus-4.8</string>
@@ -64,7 +64,7 @@
 	<key>ScriptArgs</key>
 	<array/>
 	<key>ScriptPath</key>
-	<string>/Users/anton/Dropbox/projects/simple_sinatra/main.rb</string>
+	<string>/Users/anton/Dropbox/projects/webairplay/main.rb</string>
 	<key>Secure</key>
 	<false/>
 	<key>ShowInDock</key>
