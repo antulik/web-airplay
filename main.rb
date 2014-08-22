@@ -86,6 +86,11 @@ post '/play' do
   redirect to('/')
 end
 
+post '/seek' do
+  seconds = params[:seconds]
+  $media_box.seek seconds
+end
+
 get '/jsonp' do
   content_type "text/javascript"
 

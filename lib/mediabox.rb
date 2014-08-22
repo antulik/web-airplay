@@ -45,4 +45,10 @@ class Mediabox
       url
     end
   end
+
+  def seek seconds
+    if player && player.alive?
+      player.seek seconds
+    end
+  end
 end

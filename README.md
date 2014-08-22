@@ -37,14 +37,17 @@ or build application from source with Platypus and command:
 
 ## Changelog
 
-### v0.3 - 2013/03/18
+### v0.4 - 2014/08/22
+- Seek position
+
+### v0.3 - 2014/03/18
 - Fixed bookmark on https pages. (new bookmark link required)
 
-### v0.2 - 2013/02/09
+### v0.2 - 2014/02/09
 - Application is more stable
 - New version reminder
 
-### v0.1 - 2013/02/03
+### v0.1 - 2014/02/03
 - First release. Hooray! Day 0.
 - Play youtube videos
 - Play from bookmark link

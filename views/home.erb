@@ -67,25 +67,33 @@
 
 <script type="text/javascript">
     $(function () {
-
+        var duration_seconds = 0;
         var updatePosition = function (position, duration) {
             $('.progress-bar').css('width', position / duration * 100 + '%');
-        }
+            duration_seconds = duration;
+        };
 
         var pool = function () {
             $.getJSON('/info').success(function (data, textStatus, jqXHR) {
                 updatePosition(data.position, data.duration);
             })
-        }
+        };
 
         setInterval(pool, 1000);
+
+        $('.progress').on('click', function() {
+            var total = $('.progress').width();
+            var current = event.offsetX;
+            var seconds = current/total * duration_seconds;
+            $.post('seek', { seconds: seconds } );
+        });
     });
 </script>
 
 <script type="text/javascript">
     githubReleaseReminder({
         url: 'https://api.github.com/repos/antulik/web-airplay/releases',
-        current_release_id: 229014,
+        current_release_id: 508978,
         on_new_release: function(current_release, new_release) {
             console.log(current_release);
             console.log(new_release);
@@ -101,3 +109,4 @@
         }
     });
 </script>
+
