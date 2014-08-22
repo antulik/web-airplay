@@ -98,11 +98,8 @@
             console.log(current_release);
             console.log(new_release);
 
-            var url = new_release.html_url;
-            url = url.substr(0, url.length - new_release.tag_name.length);
-
             var html = '<div class="alert alert-warning">New version is available. Please download new version at:';
-            html += '<pre>' + url + '</pre>';
+            html += '<pre>' + new_release.html_url + '</pre>';
             html += '</div> ';
 
             $('body').prepend(html);
