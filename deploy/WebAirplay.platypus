@@ -38,7 +38,7 @@
 	<key>ExecutablePath</key>
 	<string>/usr/local/share/platypus/ScriptExec</string>
 	<key>IconPath</key>
-	<string>/tmp/PlatypusIcon.icns</string>
+	<string></string>
 	<key>Identifier</key>
 	<string>org.anton.WebAirplay</string>
 	<key>Interpreter</key>
@@ -93,6 +93,6 @@
 	<key>UseXMLPlistFormat</key>
 	<true/>
 	<key>Version</key>
-	<string>1.0</string>
+	<string>0.4</string>
 </dict>
 </plist>
