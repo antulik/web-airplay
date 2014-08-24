@@ -60,7 +60,7 @@ post '/action' do
   #pause, resume, stop, scrub, info, seek
 end
 
-get '/info' do
+get '/backbone_info' do
   content_type :json
 
   if $media_box.player && (!$media_box.player.alive? || $media_box.player.stopped?)
@@ -74,7 +74,29 @@ get '/info' do
     {}
   end
 
-  info.to_json
+  # info
+  #
+  # {"duration":134.97666931152344,
+  # "loadedTimeRanges":[
+  #   {"duration":7.535599546,"start":32.422733787}
+  # ],
+  # "playbackBufferEmpty":true,
+  # "playbackBufferFull":false,
+  # "playbackLikelyToKeepUp":true,
+  # "position":32.92290115356445,
+  # "rate":1.0,
+  # "readyToPlay":true,
+  # "seekableTimeRanges":[
+  #   {"duration":134.97666666666666,"start":0.0}
+  # ]
+  # }
+
+
+  result = {
+    :_position => info['position'].to_i,
+    :_duration => info['duration'].to_i
+  }
+  result.to_json
 end
 
 post '/test' do
