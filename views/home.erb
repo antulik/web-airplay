@@ -1,9 +1,3 @@
-<style type="text/css">
-    body {
-        padding: 10px;
-        overflow: hidden;
-    }
-</style>
 
 <div class="container-fluid">
 
@@ -52,6 +46,12 @@
 <br>
 
 <div id="player"><span id="loading">Loading</span></div>
+
+<script type="text/javascript">
+  $(function() {
+
+  })
+</script>
 
 <script type="text/javascript">
     $(function () {
@@ -140,6 +140,8 @@
 
 
         var player = new metronomik.player("player", play);
+
+        $('.m-volume, .m-logo, .m-shuffleToggle').hide();
     });
 </script>
 
