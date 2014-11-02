@@ -2,8 +2,11 @@
 source "https://rubygems.org"
 
 # gem "rails"
-gem 'airplay'
+gem 'airplay', '>= 1.0.3'
 
-gem 'sinatra'
+# gem 'sinatra'
 gem 'celluloid'
 gem 'http', '0.5.1'
+
+gem 'tilt'
+gem 'cuba'
