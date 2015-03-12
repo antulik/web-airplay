@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     CFPropertyList (2.2.8)
+    addressable (2.3.7)
     airplay (1.0.3)
       CFPropertyList (~> 2.2.0)
       celluloid (>= 0.15.0)
@@ -25,6 +26,8 @@ GEM
     http (0.5.1)
       http_parser.rb
     http_parser.rb (0.6.0)
+    launchy (2.4.3)
+      addressable (~> 2.3)
     log4r (1.1.10)
     micromachine (1.0.4)
     mime-types (2.4.3)
@@ -57,4 +60,5 @@ DEPENDENCIES
   celluloid
   cuba
   http (= 0.5.1)
+  launchy
   tilt

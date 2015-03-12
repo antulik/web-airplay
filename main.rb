@@ -2,6 +2,14 @@
 
 require_relative 'app'
 
-STDOUT.write "Location: http://localhost:4567\n"
+require 'launchy'
+Launchy.open 'http://localhost:4567'
 
-Rack::Server.start :app => Cuba
+Rack::Server.start(
+  :app => Cuba,
+  debug: true,
+  # warn: false,
+  :Port => 4567,
+  # environment: 'none',
+  # daemonize: true
+)

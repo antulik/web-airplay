@@ -3,3 +3,5 @@
 *.app
 /vendor/bundle/*
 /tmp
+/release
+/packaging/vendor
