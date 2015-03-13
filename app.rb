@@ -1,5 +1,5 @@
-require 'rubygems'
-require 'bundler/setup'
+# require 'rubygems'
+# require 'bundler/setup'
 # require_relative './vendor/bundle/bundler/setup'
 
 require "cuba"
@@ -9,7 +9,9 @@ require "erb"
 require "airplay"
 require 'celluloid/autostart'
 
-Dir["./lib/**/*.rb"].each     { |rb| require rb }
+require_relative 'lib/airplay'
+require_relative 'lib/mediabox'
+require_relative 'lib/youtuber'
 
 Cuba.use Rack::Static,
   root: "public",
