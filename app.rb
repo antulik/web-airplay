@@ -22,7 +22,11 @@ $media_box = Mediabox.new
 Cuba.define do
 
   on root do
-    device_names = Airplay.devices.to_a.map(&:name)
+    begin
+      device_names = Airplay.devices.to_a.map(&:name)
+    rescue Airplay::Browser::NoDevicesFound
+      device_names = []
+    end
 
     res.write view 'home', :device_names => device_names
   end

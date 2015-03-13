@@ -22,12 +22,17 @@ GEM
     cuba (3.1.1)
       rack
     dnssd (2.0)
+    ffi (1.9.6)
     hitimes (1.2.2)
     http (0.5.1)
       http_parser.rb
     http_parser.rb (0.6.0)
     launchy (2.4.3)
       addressable (~> 2.3)
+    listen (2.9.0)
+      celluloid (>= 0.15.2)
+      rb-fsevent (>= 0.9.3)
+      rb-inotify (>= 0.9)
     log4r (1.1.10)
     micromachine (1.0.4)
     mime-types (2.4.3)
@@ -38,6 +43,9 @@ GEM
       rack (>= 1.4.5)
     nio4r (1.0.1)
     rack (1.5.2)
+    rb-fsevent (0.9.4)
+    rb-inotify (0.9.5)
+      ffi (>= 0.5.0)
     reel (0.4.0)
       celluloid (>= 0.15.1)
       celluloid-io (>= 0.15.0)
@@ -47,6 +55,8 @@ GEM
     reel-rack (0.1.0)
       rack (>= 1.4.0)
       reel (>= 0.4.0)
+    rerun (0.10.0)
+      listen (~> 2.7, >= 2.7.3)
     tilt (1.4.1)
     timers (4.0.1)
       hitimes
@@ -61,4 +71,5 @@ DEPENDENCIES
   cuba
   http (= 0.5.1)
   launchy
+  rerun
   tilt
