@@ -18,14 +18,21 @@ GEM
     celluloid-io (0.16.1)
       celluloid (>= 0.16.0)
       nio4r (>= 1.0.0)
+    coderay (1.1.0)
     cuba (3.1.1)
       rack
     dnssd (2.0)
+    ffi (1.9.6)
     hitimes (1.2.2)
     http (0.5.1)
       http_parser.rb
     http_parser.rb (0.6.0)
+    listen (2.9.0)
+      celluloid (>= 0.15.2)
+      rb-fsevent (>= 0.9.3)
+      rb-inotify (>= 0.9)
     log4r (1.1.10)
+    method_source (0.8.2)
     micromachine (1.0.4)
     mime-types (2.4.3)
     net-http-digest_auth (1.2.1)
@@ -34,7 +41,14 @@ GEM
       http_parser.rb (>= 0.6.0.beta.2)
       rack (>= 1.4.5)
     nio4r (1.0.1)
+    pry (0.9.12.6)
+      coderay (~> 1.0)
+      method_source (~> 0.8)
+      slop (~> 3.4)
     rack (1.5.2)
+    rb-fsevent (0.9.4)
+    rb-inotify (0.9.5)
+      ffi (>= 0.5.0)
     reel (0.4.0)
       celluloid (>= 0.15.1)
       celluloid-io (>= 0.15.0)
@@ -44,6 +58,9 @@ GEM
     reel-rack (0.1.0)
       rack (>= 1.4.0)
       reel (>= 0.4.0)
+    rerun (0.10.0)
+      listen (~> 2.7, >= 2.7.3)
+    slop (3.6.0)
     tilt (1.4.1)
     timers (4.0.1)
       hitimes
@@ -57,4 +74,6 @@ DEPENDENCIES
   celluloid
   cuba
   http (= 0.5.1)
+  pry
+  rerun
   tilt

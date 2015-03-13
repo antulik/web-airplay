@@ -21,6 +21,45 @@ Cuba.plugin(Cuba::Render)
 
 $media_box = Mediabox.new
 
+class VideoFetcher
+  include Celluloid
+
+  attr_reader :video, :url
+
+  def initialize video, url
+    @url = url
+    @video = video
+  end
+
+  def fetch
+    if url.match /youtube\.com/
+      y = Youtuber.new(url)
+      video.title = y.title
+      video.author = y.author
+      video.playback_urls = y.urls_playable_by_airplay
+    else
+
+    end
+  end
+end
+
+class Video
+  attr_accessor :url, :title, :author, :playback_urls
+
+  def initialize opts = {}
+    self.url = opts.fetch :url
+    self.title = url
+
+    @playback_urls = []
+    VideoFetcher.new(self, url).async.fetch
+  end
+
+end
+
+$play_queue = []
+
+$play_queue << Video.new(url: 'http://www.youtube.com/watch?v=z5pJvhd3lFQ')
+
 Cuba.define do
 
   on root do
@@ -29,6 +68,7 @@ Cuba.define do
     rescue Airplay::Browser::NoDevicesFound
       device_names = []
     end
+
 
     res.write view 'home', :device_names => device_names
   end
@@ -91,6 +131,11 @@ Cuba.define do
     res.write Base64.decode64("R0lGODlhAQABAPAAAAAAAAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==")
   end
 
+  on 'play', param(:url) do |url|
+    $media_box.play url, 0
+    res.redirect '/'
+  end
+
   on post do
     on 'action' do
       #pause, resume, stop, scrub, info, seek
@@ -98,6 +143,15 @@ Cuba.define do
 
     on 'test' do
       raise URI.unescape(params[:fmt]).inspect
+    end
+
+    on 'queue', param(:url) do |url|
+      # if submit == 'Play'
+      #   $media_box.play url, device_index
+      # else
+        $play_queue << Video.new(:url => url)
+      # end
+      res.redirect '/'
     end
 
     on 'play', param(:url), param(:device_index) do |url, device_index|
@@ -109,4 +163,5 @@ Cuba.define do
       $media_box.seek seconds
     end
   end
+
 end

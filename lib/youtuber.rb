@@ -7,6 +7,14 @@ class Youtuber
     @url = url
   end
 
+  def title
+    info['title']
+  end
+
+  def author
+    info['author']
+  end
+
   def info
     @info ||= fetch_info video_id
   end
