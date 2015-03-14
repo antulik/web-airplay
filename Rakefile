@@ -95,7 +95,7 @@ def build_osx_app
     '-a WebAirplay',
     '-o', 'Text Window',
     '-p', '/bin/bash',
-    '-V', '0.5.0',
+    '-V', VERSION,
     '-u', 'Anton Katunin',
     '-I', 'org.anton.WebAirplay',
     '-R',
