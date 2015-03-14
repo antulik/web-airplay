@@ -1,3 +1,5 @@
+![logo](http://f.cl.ly/items/0146322v3V2I1T3U1J3f/logo_128.png)
+
 WebAirplay
 ===========
 
@@ -17,17 +19,10 @@ WebAirplay is alternative to Beamer for streaming online videos like Youtube, Vi
 
 ## Download
 
-You can download WebAirplay on [release page](https://github.com/antulik/web-airplay/releases)
-
-or build application from source with Platypus and command:
-
-    rake release
-
-
+Download the latest version on [release page](https://github.com/antulik/web-airplay/releases)
 
 ## todo
 
-- New Icon
 - Fix bookmark on https pages
 - Refresh airplay devices list
 - Add vimeo support
@@ -38,6 +33,13 @@ or build application from source with Platypus and command:
 - Put on Appstore
 
 ## Changelog
+
+### v0.5 - 2015/03/14
+- Added video queue
+- switched to new framework (from cuba to rails)
+- bundled ruby
+- added icon
+- web view replace with normal browser link
 
 ### v0.4 - 2014/08/22
 - Seek position
