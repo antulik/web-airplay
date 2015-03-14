@@ -98,6 +98,7 @@ def build_osx_app
     '-V', VERSION,
     '-u', 'Anton Katunin',
     '-I', 'org.anton.WebAirplay',
+    '-i', 'packaging/logo.icns',
     '-R',
     *file_args,
     '-y',
