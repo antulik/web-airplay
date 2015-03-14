@@ -10,12 +10,11 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//1= require jquery
+//= require jquery
 //= require jquery_ujs
 //1= require turbolinks
 
-//= require messenger/js/messenger
-//= require messenger/js/messenger-theme-future
+//= require messenger
 
 //= require_tree .
 //= require_self

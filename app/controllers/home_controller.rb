@@ -1,3 +1,5 @@
+require 'airplay'
+
 class HomeController < ApplicationController
 
   helper_method :device_names

@@ -12,9 +12,7 @@
  *
  *= require_tree .
 
- *= require messenger/css/messenger
- *= require messenger/css/messenger-spinner
- *= require messenger/css/messenger-theme-future
+ *= require messenger
 
  *= require_self
  */

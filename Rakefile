@@ -24,49 +24,34 @@ task :package => ['package:linux:x86', 'package:linux:x86_64', 'package:osx']
 namespace :package do
   namespace :linux do
     desc "Package your app for Linux x86"
-    task :x86 => [:bundle_install,
+    task :x86 => [:build,
         "tmp/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86.tar.gz",
-        # "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-sqlite3-#{SQLITE3_VERSION}.tar.gz"
       ] do
       create_package("linux-x86")
+      compress 'linux-x86'
     end
 
     desc "Package your app for Linux x86_64"
-    task :x86_64 => [:bundle_install,
+    task :x86_64 => [:build,
         "tmp/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64.tar.gz",
-        # "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-sqlite3-#{SQLITE3_VERSION}.tar.gz"
       ] do
       create_package("linux-x86_64")
+      compress 'linux-x86_64'
     end
   end
 
   desc "Package your app for OS X"
-  task :osx => ['package:assets:prepare', :bundle_install,
+  task :osx => [:build,
       "tmp/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx.tar.gz",
-      # "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-sqlite3-#{SQLITE3_VERSION}.tar.gz"
     ] do
     create_package("osx")
+    build_osx_app
   end
 
-  namespace :assets do
-
-    task :prepare do
-      Rake::Task["assets:precompile"].invoke
-      Rake::Task["package:assets:remove_digest"].invoke
-      Rake::Task["assets:clobber"].invoke
-    end
-
-    task :remove_digest do
-      assets = Dir.glob(File.join(Rails.root, 'public/assets/**/*'))
-      regex = /(-{1}[a-z0-9]{32}*\.{1}){1}/
-      assets.each do |file|
-        next if File.directory?(file) || file !~ regex
-
-        File.delete file
-      end
-    end
-
-  end
+  task :build => [
+      'assets:precompile',
+      :bundle_install
+    ]
 
   desc "Install gems to local directory"
   task :bundle_install do
@@ -77,7 +62,7 @@ namespace :package do
     sh "mkdir packaging/tmp"
     sh "cp Gemfile Gemfile.lock packaging/tmp/"
     Bundler.with_clean_env do
-      sh "cd packaging/tmp && env BUNDLE_IGNORE_CONFIG=1 bundle install --path ../vendor --without development test"
+      sh "cd packaging/tmp && env BUNDLE_IGNORE_CONFIG=1 bundle install --path ../vendor --without development test assets"
     end
     sh "rm -rf packaging/tmp"
     # sh "rm -f packaging/vendor/*/*/cache/*"
@@ -86,67 +71,51 @@ namespace :package do
     # sh "find packaging/vendor/ruby/*/gems -name '*.bundle' | xargs rm -f"
     # sh "find packaging/vendor/ruby/*/gems -name '*.o' | xargs rm -f"
   end
+end
 
-  task :osx_app do
-    target = 'osx'
-    package_dir = "release/#{PACKAGE_NAME}-#{VERSION}-#{target}"
 
-    files = [
-      'hello',
-      'lib',
-    ]
-    files = files.map { |path| File.absolute_path(path, package_dir) }
-    file_args = files.map { |path| ['-f', path] }.flatten
+rule /tmp\/traveling-ruby-.+\.tar\.gz/ do |t|
+  sh "cd tmp && curl -L -O --fail " +
+      "http://d6r77u77i8pq3.cloudfront.net/releases/#{t.name}"
+end
 
-    sh('/usr/local/bin/platypus',
-      '-a WebAirplay',
-      '-o', 'Text Window',
-      '-p', '/bin/bash',
-      '-V', '0.5.0',
-      '-u', 'Anton Katunin',
-      '-I', 'org.anton.WebAirplay',
-      '-R',
-      *file_args,
-      '-y',
-      files.first,
-      "release/WebAirplay-#{VERSION}.app"
-    )
+def build_osx_app
+  target = 'osx'
+  package_name = "#{PACKAGE_NAME}-#{VERSION}-#{target}"
+  package_dir = "release/#{package_name}"
+
+  files = [
+    'hello',
+    'lib',
+  ]
+  files = files.map { |path| File.absolute_path(path, package_dir) }
+  file_args = files.map { |path| ['-f', path] }.flatten
+
+  sh('/usr/local/bin/platypus',
+    '-a WebAirplay',
+    '-o', 'Text Window',
+    '-p', '/bin/bash',
+    '-V', '0.5.0',
+    '-u', 'Anton Katunin',
+    '-I', 'org.anton.WebAirplay',
+    '-R',
+    *file_args,
+    '-y',
+    files.first,
+    "release/WebAirplay-#{VERSION}.app"
+  )
+
+  cd 'release' do
+    sh "tar -czf #{package_name}.tar.gz WebAirplay-#{VERSION}.app"
   end
+  # sh "rm -rf release/WebAirplay-#{VERSION}.app"
 end
-
-
-
-file "tmp/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86.tar.gz" do
-  download_runtime("linux-x86")
-end
-
-file "tmp/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64.tar.gz" do
-  download_runtime("linux-x86_64")
-end
-
-file "tmp/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx.tar.gz" do
-  download_runtime("osx")
-end
-
-
-
-# file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-sqlite3-#{SQLITE3_VERSION}.tar.gz" do
-#   download_native_extension("linux-x86", "sqlite3-#{SQLITE3_VERSION}")
-# end
-#
-# file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-sqlite3-#{SQLITE3_VERSION}.tar.gz" do
-#   download_native_extension("linux-x86_64", "sqlite3-#{SQLITE3_VERSION}")
-# end
-#
-# file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-sqlite3-#{SQLITE3_VERSION}.tar.gz" do
-#   download_native_extension("osx", "sqlite3-#{SQLITE3_VERSION}")
-# end
 
 def create_package(target)
   package_name = "#{PACKAGE_NAME}-#{VERSION}-#{target}"
   package_dir = "release/#{package_name}"
   sh "rm -rf #{package_dir}"
-  sh "mkdir #{package_dir}"
+  sh "mkdir -p #{package_dir}"
   sh "mkdir -p #{package_dir}/lib/app"
 
   files = [
@@ -172,33 +141,20 @@ def create_package(target)
   sh "cp packaging/bundler-config #{package_dir}/lib/vendor/.bundle/config"
   # sh "tar -xzf packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-#{target}-sqlite3-#{SQLITE3_VERSION}.tar.gz " +
   #     "-C #{package_dir}/lib/vendor/ruby"
+end
+
+def compress target
+  package_name = "#{PACKAGE_NAME}-#{VERSION}-#{target}"
+  package_dir = "release/#{package_name}"
 
   if !ENV['DIR_ONLY']
     sh "rm -rf #{package_dir}.tar.gz"
     if target == 'osx'
-      Rake::Task["package:osx_app"].invoke
 
-      # sh "rm -rf #{package_dir}.zip"
-      # cd 'release' do
-      #   sleep 3
-      #   sh "zip -r #{package_name}.zip ./WebAirplay-#{VERSION}.app"
-      # end
-
-      sh "tar -czf #{package_dir}.tar.gz release/WebAirplay-#{VERSION}.app"
-      sh "rm -rf release/WebAirplay-#{VERSION}.app"
     else
       sh "tar -czf #{package_dir}.tar.gz #{package_dir}"
     end
     sh "rm -rf #{package_dir}"
   end
-end
 
-def download_runtime(target)
-  sh "cd tmp && curl -L -O --fail " +
-      "http://d6r77u77i8pq3.cloudfront.net/releases/traveling-ruby-#{TRAVELING_RUBY_VERSION}-#{target}.tar.gz"
-end
-
-def download_native_extension(target, gem_name_and_version)
-  sh "curl -L --fail -o packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-#{target}-#{gem_name_and_version}.tar.gz " +
-      "http://d6r77u77i8pq3.cloudfront.net/releases/traveling-ruby-gems-#{TRAVELING_RUBY_VERSION}-#{target}/#{gem_name_and_version}.tar.gz"
 end
