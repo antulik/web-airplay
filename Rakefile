@@ -1,3 +1,8 @@
+require File.expand_path('../config/application', __FILE__)
+
+Rails.application.load_tasks
+
+
 require 'rake'
 require 'rake/testtask'
 
@@ -36,11 +41,31 @@ namespace :package do
   end
 
   desc "Package your app for OS X"
-  task :osx => [:bundle_install,
+  task :osx => ['package:assets:prepare', :bundle_install,
       "tmp/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx.tar.gz",
       # "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-sqlite3-#{SQLITE3_VERSION}.tar.gz"
     ] do
     create_package("osx")
+  end
+
+  namespace :assets do
+
+    task :prepare do
+      Rake::Task["assets:precompile"].invoke
+      Rake::Task["package:assets:remove_digest"].invoke
+      Rake::Task["assets:clobber"].invoke
+    end
+
+    task :remove_digest do
+      assets = Dir.glob(File.join(Rails.root, 'public/assets/**/*'))
+      regex = /(-{1}[a-z0-9]{32}*\.{1}){1}/
+      assets.each do |file|
+        next if File.directory?(file) || file !~ regex
+
+        File.delete file
+      end
+    end
+
   end
 
   desc "Install gems to local directory"
@@ -52,7 +77,7 @@ namespace :package do
     sh "mkdir packaging/tmp"
     sh "cp Gemfile Gemfile.lock packaging/tmp/"
     Bundler.with_clean_env do
-      sh "cd packaging/tmp && env BUNDLE_IGNORE_CONFIG=1 bundle install --path ../vendor --without development"
+      sh "cd packaging/tmp && env BUNDLE_IGNORE_CONFIG=1 bundle install --path ../vendor --without development test"
     end
     sh "rm -rf packaging/tmp"
     # sh "rm -f packaging/vendor/*/*/cache/*"
@@ -83,7 +108,6 @@ namespace :package do
       '-R',
       *file_args,
       '-y',
-      # '-O',
       files.first,
       "release/WebAirplay-#{VERSION}.app"
     )
@@ -126,11 +150,14 @@ def create_package(target)
   sh "mkdir -p #{package_dir}/lib/app"
 
   files = [
-    'app.rb',
-    'main.rb',
+    'app',
+    'bin',
+    'config',
+    'db',
     'lib',
-    'views',
-    'public'
+    'public',
+    'vendor',
+    'main.rb',
   ]
   files.each do |file|
     sh "cp -R #{file} #{package_dir}/lib/app/#{file}"

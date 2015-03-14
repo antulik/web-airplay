@@ -1,0 +1,12 @@
+div class="list-group"
+  - videos.each do |video|
+    div class="list-group-item"
+      div class="pull-right"
+        - video.playback_urls.each do |url|
+          => link_to player_url(url: url['url']), class: 'btn btn-info',
+            method: :post, remote: true do
+            = url['quality']
+      h4 class="list-group-item-heading"
+        = video.title
+      p class="list-group-item-text"
+        = video.url

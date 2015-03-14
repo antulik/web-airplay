@@ -1,13 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'rack'
-require 'rack/showexceptions'
-
-require_relative 'app'
-
+require ::File.expand_path('../config/environment', __FILE__)
 
 Rack::Server.start(
-  :app => Rack::ShowExceptions.new(Rack::Lint.new(Cuba.app)),
+  :app => Rack::ShowExceptions.new(Rack::Lint.new(Rails.application)),
   # debug: true,
   # warn: false,
   :Port => 4567,
