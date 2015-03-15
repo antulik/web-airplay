@@ -34,6 +34,12 @@ Download the latest version on [release page](https://github.com/antulik/web-air
 
 ## Changelog
 
+### 0.5.1 - 2015/03/15
+- updated new version checker
+- interface switched to progress bar
+- refresh devices button
+- video list is saved
+
 ### v0.5 - 2015/03/14
 - Added video queue
 - switched to new framework (from cuba to rails)
