@@ -14,7 +14,7 @@ nav class="navbar navbar-default"
       .form-group>
         input type="text" class="form-control" placeholder="url" name="url" id="new_url"
 
-      button> type="submit" class="btn btn-primary" Add
+      button> type="submit" class="btn btn-primary" Add to queue
 
     div id="navbar" class="collapse navbar-collapse"
 
@@ -25,17 +25,26 @@ nav class="navbar navbar-default"
       /<!--</ul>-->
 
       ul class="nav navbar-nav navbar-right"
-        li
+        li data-toggle="tooltip" data-placement="bottom" title="Refresh devices"
+          = link_to refresh_devices_path do
+            span class="glyphicon glyphicon-refresh" aria-hidden="true"
+
+        li data-toggle="tooltip" data-placement="bottom" title="Bookmark this link"
           a href="javascript:(a%20=%20(b%20=%20document).createElement('img')).src%20=%20'http://localhost:4567/img_play/'%20+%20encodeURIComponent(document.location),%20b.body.appendChild(a);void(0);" title="AirPlay" class="" id="bookmark-link"
-            |WebAirplay - Bookmark this link
+            |WebAirplay - Add to queue
+
       = form_tag current_device_player_path, remote: true, class: 'navbar-form navbar-right' do
         ruby:
           options = options_from_collection_for_select(device_names.each_with_index.to_a, :last, :first, Mediabox.instance.default_device_index)
-        .form-group>
-          = select_tag(:device_id, options, onchange: 'javascript: $( this ).trigger("submit.rails")', class: 'form-control')
-div class="container"
 
+        .form-group> data-toggle="tooltip" data-placement="bottom" title="Device to play on"
+          = select_tag(:device_id, options, onchange: 'javascript: $( this ).trigger("submit.rails")', class: 'form-control')
+
+
+div class="container"
+  #alerts
   #videos
+  = link_to 'Clear List', clear_videos_path, method: :delete, class: 'btn btn-default'
 
 div id="player"
   span id="loading" Loading
@@ -50,33 +59,18 @@ javascript:
     }, 1000);
   });
 
+javascript:
+  $(function () {
+    play = new Player;
+
+    setInterval(function () {
+      play.fetch();
+    }, 1000);
+
+    var player = new metronomik.player("player", play);
+
+    $('.m-volume, .m-logo, .m-shuffleToggle').hide();
+  });
 
 javascript:
-    $(function () {
-      play = new Player;
-
-      setInterval(function () {
-        play.fetch();
-      }, 1000);
-
-      var player = new metronomik.player("player", play);
-
-      $('.m-volume, .m-logo, .m-shuffleToggle').hide();
-    });
-
-
-javascript:
-    githubReleaseReminder({
-        url: 'https://api.github.com/repos/antulik/web-airplay/releases',
-        current_release_id: 1050136,
-        on_new_release: function(current_release, new_release) {
-            console.log(current_release);
-            console.log(new_release);
-
-            var html = '<div class="alert alert-warning">New version is available. Please download new version at:';
-            html += '<pre>' + new_release.html_url + '</pre>';
-            html += '</div> ';
-
-            $('body').prepend(html);
-        }
-    });
+  $.getScript('version_check');

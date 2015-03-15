@@ -18,3 +18,4 @@
 /tmp
 /release
 /packaging/vendor
+/db/*.pstore

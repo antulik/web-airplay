@@ -9,4 +9,4 @@ div class="list-group"
       h4 class="list-group-item-heading"
         = video.title
       p class="list-group-item-text"
-        = video.url
+        = link_to video.url, video.url, target: :blank

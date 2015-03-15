@@ -14,12 +14,24 @@
 //= require jquery_ujs
 //1= require turbolinks
 
-//= require messenger
+//= require underscore
+//= require backbone
 
-//= require_tree .
+//= require messenger
+//= require bootstrap
+
+//= require youtube-video
+
+//= require m-player/m-player
+
+//= require player
 //= require_self
 
 Messenger.options = {
   extraClasses: 'messenger-fixed messenger-on-top',
   theme: 'future'
-}
+};
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})

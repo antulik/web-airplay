@@ -1,9 +1,18 @@
 class Mediabox
   include Singleton
 
-  attr_accessor :player
+  attr_accessor :player, :devices
+
 
   def initialize
+    browse
+  end
+
+  def browse
+    Airplay.browse
+    self.devices = Airplay.devices.to_a.dup
+  rescue Airplay::Browser::NoDevicesFound
+    self.devices = []
   end
 
   def default_device_index
@@ -16,14 +25,9 @@ class Mediabox
 
   def play url, device_index = default_device_index
     puts 7.chr
-    url = parse_url url
 
-    if device_index
-      device_index = device_index.to_i
-      device = Airplay.devices.to_a[device_index]
-    else
-      device = Airplay.devices.to_a.last
-    end
+    url = parse_url url
+    device = devices[device_index.to_i]
 
     if url
       play_on_device device, url
@@ -31,7 +35,6 @@ class Mediabox
   end
 
   def play_on_device device, url
-
     if player && !player.alive?
       self.player = nil
     end

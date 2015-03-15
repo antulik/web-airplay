@@ -13,6 +13,23 @@
  *= require_tree .
 
  *= require messenger
+ *= require bootstrap
+
+ *= require m-player/m-player
 
  *= require_self
  */
+
+body {
+    padding: 10px;
+    margin-bottom: 100px;
+}
+
+#player {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background-color: rgb(60, 60, 60);
+}

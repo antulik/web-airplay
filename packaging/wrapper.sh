@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo "Loading WebAirplay. Please wait..."
-#echo "Location: http://localhost:4567"
+echo "Runnin WebAirplay. Please open http://localhost:4567"
+#echo "Location: http://localhost:3456"
 
 (sleep 5 && open "http://localhost:4567")&
 

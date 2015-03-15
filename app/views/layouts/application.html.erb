@@ -2,31 +2,15 @@
 <html>
 <head>
   <title>Webairplay</title>
-  <link href="css/bootstrap.min.css" rel="stylesheet">
 
-
-  <script src='js/jquery-1.10.2.min.js' type='text/javascript'></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/youtube-video.js"></script>
-  <script src="js/github_release_reminder.js"></script>
-
-  <link href="css/m-player.css" rel="stylesheet">
-  <script src="js/m-player.js"></script>
-
-  <script src="js/underscore.js"></script>
-  <script src="js/backbone.js"></script>
-
-  <link href="css/app.css" rel="stylesheet">
-
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
 
   <%= csrf_meta_tags %>
 </head>
 <body>
 
 <%= yield %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 
 </body>
 </html>

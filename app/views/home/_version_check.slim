@@ -1,0 +1,8 @@
+div class="alert alert-warning"
+  'New version is available. Please download
+  = link_to @release.name, @release.html_url, target: :blank
+  ':
+
+  ul
+    - @release.assets.each do |asset|
+      li = link_to asset['name'], asset['browser_download_url'], target: :blank

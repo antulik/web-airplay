@@ -12,9 +12,10 @@ end
 
 # For Bundler.with_clean_env
 require 'bundler/setup'
+require_relative 'lib/web_airplay'
 
 PACKAGE_NAME = "webairplay"
-VERSION = "0.5.0"
+VERSION = WebAirplay::VERSION
 TRAVELING_RUBY_VERSION = "20150210-2.2.0"
 # SQLITE3_VERSION = "1.3.9"  # Must match Gemfile
 
@@ -93,7 +94,8 @@ def build_osx_app
 
   sh('/usr/local/bin/platypus',
     '-a WebAirplay',
-    '-o', 'Text Window',
+    '-o', 'Progress Bar',
+    # '-o', 'Text Window',
     '-p', '/bin/bash',
     '-V', VERSION,
     '-u', 'Anton Katunin',

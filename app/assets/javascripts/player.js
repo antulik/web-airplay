@@ -73,7 +73,7 @@ Player = Backbone.Model.extend({
   next: function() {},
 
   url: function() {
-    return '/backbone_info'
+    return '/player/backbone_info'
   }
 });
 

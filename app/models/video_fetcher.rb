@@ -17,5 +17,7 @@ class VideoFetcher
     else
 
     end
+
+    Video.save_to_disk
   end
 end

@@ -20,11 +20,14 @@ gem 'sprockets-rails'
 gem 'airplay', '>= 1.0.3'
 
 gem 'celluloid'
+gem 'httparty'
 
 group :development, :test do
   #assets
   source 'https://rails-assets.org' do
     gem 'rails-assets-messenger'
+    gem 'rails-assets-backbone'
+    gem 'rails-assets-bootstrap'
   end
   # Use SCSS for stylesheets
   gem 'sass-rails', '~> 5.0'
@@ -34,6 +37,7 @@ group :development, :test do
   gem 'coffee-rails', '~> 4.1.0'
 
   gem 'jquery-rails'
+  gem "non-stupid-digest-assets"
 
   #dev
   gem 'bundler', '>= 1.8.4', '< 2.0'

@@ -16,5 +16,10 @@ class VideosController < ApplicationController
     end
   end
 
-end
+  def clear
+    Video.all.clear
+    Video.save_to_disk
+    redirect_to root_path
+  end
 
+end

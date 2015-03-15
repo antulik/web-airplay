@@ -5,19 +5,22 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'home#show'
 
-  get 'backbone_info' => 'home#backbone_info'
-
   get 'jsonp' => 'home#jsonp'
+  get 'version_check' => 'home#version_check'
+  get 'refresh_devices' => 'home#refresh_devices'
 
   get 'img_play/:url', to: 'home#img_play', constraints: { url: /.+/ }
 
-  resources :videos
+  resources :videos do
+    delete 'clear', on: :collection
+  end
   resource :player do
     post 'seek'
     post 'resume'
     post 'pause'
     get 'play'
     post 'current_device'
+    get 'backbone_info'
   end
 
   # Example of regular route:
