@@ -34,6 +34,9 @@ Download the latest version on [release page](https://github.com/antulik/web-air
 
 ## Changelog
 
+### 0.5.2 - 2015/03/16
+- fixed bug when styles weren't loaded
+
 ### 0.5.1 - 2015/03/15
 - updated new version checker
 - interface switched to progress bar
