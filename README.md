@@ -5,7 +5,7 @@ WebAirplay
 
 On iPhone you can play any video from Internet on Airplay device. WebAirplay gives you exactly that but on your desktop.
 
-![webairplay screenshot](http://cl.ly/image/2q3I2L1U0i2F/Image%202014-03-18%20at%209.33.05%20pm.png)
+![webairplay screenshot](http://f.cl.ly/items/332B0R1x30303p1G3i0l/Screenshot%202015-03-15%2013.37.10_2.png)
 
 ## Why?
 
