@@ -13,7 +13,7 @@ $stderr.reopen('/dev/null', 'w')
 require ::File.expand_path('../config/environment', __FILE__)
 
 Rack::Server.start(
-  :app => Rack::ShowExceptions.new(Rack::Lint.new(Rails.application)),
+  :app => Rack::ShowExceptions.new(Rails.application),
   # debug: true,
   # warn: false,
   :Port => 4567,
