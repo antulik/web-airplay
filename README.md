@@ -10,6 +10,7 @@ On iPhone you can play any video from Internet on Airplay device. WebAirplay giv
 ## Help Needed!!
 
 - [Browser Extension](https://github.com/antulik/web-airplay/issues/1)
+- [Mac OS application loader](https://github.com/antulik/web-airplay/issues/2)
 
 ## Why?
 
