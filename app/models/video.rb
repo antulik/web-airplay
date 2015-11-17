@@ -1,7 +1,7 @@
 require "pstore"
 
 class Video
-  attr_accessor :url, :title, :author, :playback_urls
+  attr_accessor :url, :title, :author, :playback_urls, :id
   attr_accessor :created_at
 
   def self.storage
@@ -24,12 +24,24 @@ class Video
     all.detect { |video| video.url == url }
   end
 
+  def self.find_by_id id
+    all.detect { |video| video.id == id }
+  end
+
   def self.add_to_list video
     if all.last && all.last.url == video.url
     else
       all << video
     end
     save_to_disk
+  end
+
+  def self.delete_by_id id
+    obj = find_by_id id
+    if obj
+      all.delete obj
+      save_to_disk
+    end
   end
 
   def initialize opts = {}
@@ -40,6 +52,7 @@ class Video
     VideoFetcher.new(self, url).async.fetch
 
     self.created_at = DateTime.now
+    self.id = SecureRandom.urlsafe_base64
   end
 
 end

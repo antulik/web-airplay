@@ -23,6 +23,25 @@ Rails.application.routes.draw do
     get 'backbone_info'
   end
 
+  namespace :api_v1 do
+    resources :devices do
+
+      collection do
+        post 'refresh'
+      end
+
+      member do
+        post 'pause'
+        post 'seek'
+        post 'resume'
+        post 'play_url'
+        get 'playback'
+      end
+
+      resources :items, shallow: true
+    end
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
