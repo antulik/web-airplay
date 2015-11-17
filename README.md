@@ -7,6 +7,10 @@ On iPhone you can play any video from Internet on Airplay device. WebAirplay giv
 
 ![webairplay screenshot](http://f.cl.ly/items/332B0R1x30303p1G3i0l/Screenshot%202015-03-15%2013.37.10_2.png)
 
+## Help Needed!!
+
+- [Browser Extension](https://github.com/antulik/web-airplay/issues/1)
+
 ## Why?
 
 If you would like to watch video from your desktop you can use builtin Airplay functionality
