@@ -34,7 +34,7 @@ Download the latest version on [release page](https://github.com/antulik/web-air
 [ 
   {
     "id": 0,
-    "name": 'device.name',
+    "name": "AirplayTV"
   }
 ]
 ```
