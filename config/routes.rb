@@ -37,9 +37,9 @@ Rails.application.routes.draw do
         post 'play_url'
         get 'playback'
       end
-
-      resources :items, shallow: true
     end
+
+    resources :items
   end
 
   # Example of regular route:

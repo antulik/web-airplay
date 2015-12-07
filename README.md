@@ -21,6 +21,72 @@ WebAirplay is alternative to Beamer for streaming online videos like Youtube, Vi
 
 Download the latest version on [release page](https://github.com/antulik/web-airplay/releases)
 
+## API
+
+* GET **/api_v1/devices** - list airplay devices
+
+```json
+[ 
+  {
+    id: 0,
+    name: 'device.name',
+  },
+  {...} 
+]
+```
+
+* GET **/api_v1/refresh** - refresh devices list
+
+* POST **/api_v1/devices/:device_id/pause** - pause playback
+
+* POST **/api_v1/devices/:device_id/seek** - scroll video to **:seconds** from start 
+
+* POST **/api_v1/devices/:device_id/resume** - resume playback on the device if paused
+
+* POST **/api_v1/devices/:device_id/play_url** - play direct video url on that device
+
+* GET **/api_v1/devices/:device_id/playback** - returns current play info
+
+```json
+{
+  "duration":134.97666931152344,
+  "loadedTimeRanges":[
+    {"duration":7.535599546, "start":32.422733787}
+  ],
+  "playbackBufferEmpty":true,
+  "playbackBufferFull":false,
+  "playbackLikelyToKeepUp":true,
+  "position":32.92290115356445,
+  "rate":1.0,
+  "readyToPlay":true,
+  "seekableTimeRanges":[
+    {"duration":134.97666666666666,"start":0.0}
+  ],
+  "playState": "playing"
+}
+```
+
+* GET **/api_v1/items** - returns play queue
+
+```json
+[
+  {
+    "id": 0
+    "url": ''
+    "title": ''
+    "author": ''
+    "playback_urls": []
+    "created_at": ''
+  },
+  {...}
+]
+```
+
+* POST **/api_v1/items** - add **:url** to play queue
+
+* DELTE **/api_v1/items/:id** - delete item from play queue
+ 
+
 ## todo
 
 - Fix bookmark on https pages
@@ -36,6 +102,7 @@ Download the latest version on [release page](https://github.com/antulik/web-air
 
 ### next
 - file size decreased
+- api
 
 ### 0.5.2 - 2015/03/16
 - fixed bug when styles weren't loaded
