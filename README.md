@@ -35,8 +35,7 @@ Download the latest version on [release page](https://github.com/antulik/web-air
   {
     id: 0,
     name: 'device.name',
-  },
-  {...} 
+  }
 ]
 ```
 
@@ -76,14 +75,13 @@ Download the latest version on [release page](https://github.com/antulik/web-air
 ```json
 [
   {
-    "id": 0
-    "url": ''
-    "title": ''
-    "author": ''
-    "playback_urls": []
+    "id": 0,
+    "url": '',
+    "title": '',
+    "author": '',
+    "playback_urls": [],
     "created_at": ''
-  },
-  {...}
+  }
 ]
 ```
 
