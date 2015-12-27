@@ -98,13 +98,13 @@ Download the latest version on [release page](https://github.com/antulik/web-air
 - Add any html5 video playback support
 - Simultaneous multiple device playback
 - Local video files support
-- Sign app so MacOS doesn't complaing
+- Sign app so MacOS doesn't complain
 - Put on Appstore
 
 ## Changelog
 
 ### next
-- file size decreased
+- fixed linux versions
 - api
 
 ### 0.5.2 - 2015/03/16

@@ -16,7 +16,7 @@ require_relative 'lib/web_airplay'
 
 PACKAGE_NAME = "webairplay"
 VERSION = WebAirplay::VERSION
-TRAVELING_RUBY_VERSION = "20150210-2.2.0"
+TRAVELING_RUBY_VERSION = "20150715-2.1.6"
 # SQLITE3_VERSION = "1.3.9"  # Must match Gemfile
 
 desc "Package app"
@@ -71,55 +71,20 @@ namespace :package do
     sh "rm -f db/data.pstore"
   end
 
-  desc "Install gems to local directory"
-  task :bundle => 'bundle:default'
-
-  namespace :bundle do
-    task :default => [
-        # :clean,
-        :install,
-        :free_space
-      ]
-
-    task :clean do
-      sh 'rm -rf packaging/vendor'
-    end
-
-    task :install do
-      if RUBY_VERSION !~ /^2\.2\./
-        abort "You can only 'bundle install' using Ruby 2.2, because that's what Traveling Ruby uses."
-      end
-      sh "rm -rf packaging/tmp"
-      sh "mkdir packaging/tmp"
-      sh "cp Gemfile Gemfile.lock packaging/tmp/"
-      Bundler.with_clean_env do
-        sh "cd packaging/tmp && env BUNDLE_IGNORE_CONFIG=1 bundle install --path ../vendor --without development test assets"
-      end
-      sh "rm -rf packaging/tmp"
-    end
-
-    task :free_space do
-      # sh "find packaging/vendor/ruby/*/gems -name '*.bundle' | xargs rm -f"
-      sh "rm -f packaging/vendor/*/*/cache/*"
-      sh "rm -rf packaging/vendor/ruby/*/extensions"
-      sh "find packaging/vendor/ruby/*/gems -name '*.so' | xargs rm -f"
-      sh "find packaging/vendor/ruby/*/gems -name '*.o' | xargs rm -f"
-    end
-  end
-
   ['osx', 'linux-x86_64', 'linux-x86'].each do |target|
     package_name = "#{PACKAGE_NAME}-#{VERSION}-#{target}"
     package_dir = "release/#{package_name}"
 
     namespace target do
+
       task :build => [
           :clean_data,
           'assets:precompile',
-          :bundle,
           :folder,
           :app,
           :ruby,
           :vendor,
+          'assets:clobber',
         ]
 
       task :compressed => :build do
@@ -131,7 +96,7 @@ namespace :package do
       end
 
       task :folder do
-        sh "rm -rf #{package_dir}"
+        # sh "rm -rf #{package_dir}"
         sh "mkdir -p #{package_dir}"
 
         sh "cp packaging/wrapper.sh #{package_dir}/hello"
@@ -163,10 +128,31 @@ namespace :package do
       end
 
       task :vendor do
-        sh "cp -pR packaging/vendor #{package_dir}/lib/"
+        sh "mkdir -p #{package_dir}/lib/vendor/"
         sh "cp Gemfile Gemfile.lock #{package_dir}/lib/vendor/"
-        sh "mkdir #{package_dir}/lib/vendor/.bundle"
+        sh "mkdir -p #{package_dir}/lib/vendor/.bundle"
         sh "cp packaging/bundler-config #{package_dir}/lib/vendor/.bundle/config"
+
+        bundle_cmd = 'env BUNDLE_IGNORE_CONFIG=1 bundle install --path . --without development test assets'
+
+        case target
+        when 'osx'
+          Bundler.with_clean_env do
+            sh "cd #{package_dir}/lib/vendor && #{bundle_cmd}"
+          end
+        when 'linux-x86_64', 'linux-x86'
+          Bundler.with_clean_env do
+            sh "vagrant ssh #{target} -c 'source ~/.bashrc_ssh && cd /vagrant/#{package_dir}/lib/vendor && #{bundle_cmd}'"
+          end
+        end
+
+        # FREE SPACE
+        # currently this breaks linux distribution
+        # sh "find #{package_dir}/lib/vendor/ruby/*/gems -name '*.bundle' | xargs rm -f"
+        # sh "rm -f #{package_dir}/lib/vendor/*/*/cache/*"
+        # sh "rm -rf #{package_dir}/lib/vendor/ruby/*/extensions"
+        # sh "find #{package_dir}/lib/vendor/ruby/*/gems -name '*.so' | xargs rm -f"
+        # sh "find #{package_dir}/lib/vendor/ruby/*/gems -name '*.o' | xargs rm -f"
       end
 
     end
@@ -174,6 +160,7 @@ namespace :package do
 end
 
 rule /tmp\/traveling-ruby-.+\.tar\.gz/ do |t|
+  name = t.name.gsub('tmp/', '')
   sh "cd tmp && curl -L -O --fail " +
-      "http://d6r77u77i8pq3.cloudfront.net/releases/#{t.name}"
+      "http://d6r77u77i8pq3.cloudfront.net/releases/#{name}"
 end

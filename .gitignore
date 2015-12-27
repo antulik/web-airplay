@@ -19,3 +19,4 @@
 /release
 /packaging/vendor
 /db/*.pstore
+.vagrant

@@ -3,7 +3,11 @@
 echo "Runnin WebAirplay. Please open http://localhost:4567"
 #echo "Location: http://localhost:3456"
 
-(sleep 5 && open "http://localhost:4567")&
+if hash xdg-open 2>/dev/null; then
+    (sleep 5 && xdg-open "http://localhost:4567")&
+else
+    (sleep 5 && open "http://localhost:4567")&
+fi
 
 set -e
 
